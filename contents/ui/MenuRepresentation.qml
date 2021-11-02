@@ -59,6 +59,8 @@ Kicker.DashboardWindow {
     property int gridNumRows:  plasmoid.configuration.useCustomSizeGrid ? plasmoid.configuration.numberRows : Math.floor(height * 0.8  /  cellSizeHeight)  // TODO: set from settings
     property int widthScreen:  gridNumCols * cellSizeWidth
     property int heightScreen: gridNumRows * cellSizeHeight
+    property bool showFavorites: plasmoid.configuration.showFavorites
+    property bool startIndex: (showFavorites && plasmoid.configuration.startOnFavorites) ? 0 : 1
 
     function colorWithAlpha(color, alpha) {
         return Qt.rgba(color.r, color.g, color.b, alpha)
@@ -75,8 +77,6 @@ Kicker.DashboardWindow {
     onVisibleChanged: {
         reset();
         rootModel.pageSize = gridNumCols*gridNumRows
-        pageList.currentIndex = 1;
-        
     }
 
     onSearchingChanged: {
@@ -96,7 +96,7 @@ Kicker.DashboardWindow {
         }
         searchField.text = "";
         pageListScrollArea.focus = true;
-        pageList.currentIndex = 1;
+        pageList.currentIndex = startIndex;
         
         //pageList.currentItem.itemGrid.currentIndex = -1;
         //pageList.currentItem.itemGrid.tryActivate(0, 0);
@@ -245,6 +245,7 @@ Kicker.DashboardWindow {
                     id: pageList
                     anchors.fill: parent
                     snapMode: ListView.SnapOneItem
+                    leftMargin: (showFavorites || searching) ? 0 : -widthScreen
                     orientation: Qt.Horizontal
                     onCurrentIndexChanged: {
                         positionViewAtIndex(currentIndex, ListView.Contain);
@@ -259,7 +260,7 @@ Kicker.DashboardWindow {
                         if(searching)
                             currentIndex = 0;
                         else{
-                            currentIndex = 1;
+                            currentIndex = startIndex;
                         }
                     }
                     onMovingChanged: {
@@ -274,21 +275,24 @@ Kicker.DashboardWindow {
                         enabled = true;
                     }
 
-                    function activateNextPrev(next) {
+                    function activateNextPrev(next, activate = true) {
+                        var oldIndex = pageList.currentIndex;
                         if (next) {
                             var newIndex = pageList.currentIndex + 1;
 
                             if (newIndex < pageList.count) {
                                 pageList.currentIndex = newIndex;
                             }
-
                         } else {
                             var newIndex = pageList.currentIndex - 1;
 
-                            if (newIndex >= 1) {
+                            if (newIndex >= (showFavorites ? 0 : 1)) {
                                 pageList.currentIndex = newIndex;
                             }
+                        }
 
+                        if(oldIndex != pageList.currentIndex && activate) {
+                            pageList.currentItem.itemGrid.tryActivate(0, next ? 0 : gridNumCols - 1);
                         }
                     }
 
@@ -298,6 +302,8 @@ Kicker.DashboardWindow {
                         height:  gridNumRows * cellSizeHeight
 
                         property Item itemGrid: gridView
+
+                        visible: (showFavorites || searching) ? true : (index != 0)
 
                         ItemGridView {
                             id: gridView
@@ -311,7 +317,7 @@ Kicker.DashboardWindow {
                             horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
                             verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
 
-                            dragEnabled: (index == 0)
+                            dragEnabled: (index == 0) && plasmoid.configuration.showFavorites
 
                             model: searching ? runnerModel.modelForRow(index) : rootModel.modelForRow(0).modelForRow(index)
                             onCurrentIndexChanged: {
@@ -339,19 +345,11 @@ Kicker.DashboardWindow {
 
                             }
                             onKeyNavRight: {
-                                var newIndex = pageList.currentIndex + 1;
-                                if (newIndex < pageList.count) {
-                                    pageList.currentIndex = newIndex;
-                                    pageList.currentItem.itemGrid.tryActivate(0, 0);
-                                }
+                                pageList.activateNextPrev(1);
                             }
 
                             onKeyNavLeft: {
-                                var newIndex = pageList.currentIndex - 1;
-                                if (newIndex > 0) {
-                                    pageList.currentIndex = newIndex;
-                                    pageList.currentItem.itemGrid.tryActivate(0, 0);
-                                }
+                                pageList.activateNextPrev(0);
                             }
                         }
 
@@ -379,7 +377,7 @@ Kicker.DashboardWindow {
                                 }
 
                                 while (increment != 0) {
-                                    pageList.activateNextPrev(increment < 0);
+                                    pageList.activateNextPrev(increment < 0, false);
                                     increment += (increment < 0) ? 1 : -1;
                                 }
 
@@ -425,7 +423,7 @@ Kicker.DashboardWindow {
 
                     radius: width / 2
                     color: theme.textColor
-                    visible: (index != 0)
+                    visible: (showFavorites || searching) ? true : (index != 0)
                     opacity: 0.5
                     Behavior on width { SmoothedAnimation { duration: units.longDuration; velocity: 0.01 } }
                     Behavior on opacity { SmoothedAnimation { duration: units.longDuration; velocity: 0.01 } }
@@ -463,7 +461,7 @@ Kicker.DashboardWindow {
                         }
 
                         while (increment != 0) {
-                            pageList.activateNextPrev(increment < 0);
+                            pageList.activateNextPrev(increment < 0, false);
                             increment += (increment < 0) ? 1 : -1;
                         }
 
@@ -517,8 +515,7 @@ Kicker.DashboardWindow {
         paginationBar.model = rootModel.modelForRow(0);
         searchField.text = "";
         pageListScrollArea.focus = true;
-        pageList.currentIndex = 1;
+        pageList.currentIndex = startIndex;
         kicker.reset.connect(reset);
-        
     }
 }

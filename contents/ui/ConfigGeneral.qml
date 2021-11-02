@@ -47,6 +47,8 @@ Item {
     property alias cfg_numberRows:    numberRows.value
     property alias cfg_spaceWidth:    spaceWidth.value
     property alias cfg_spaceHeight:   spaceHeight.value
+    property alias cfg_showFavorites: showFavorites.checked
+    property alias cfg_startOnFavorites: startOnFavorites.checked
 
     ColumnLayout {
         anchors.left: parent.left
@@ -241,6 +243,22 @@ Item {
                         text: i18n("Number of rows")
                     }
                 }
+            }
+        }
+        CheckBox{
+            id: showFavorites
+            text:  "Show favorites"
+            onClicked: {
+                startOnFavorites.checked = checked;
+            }
+        }
+        RowLayout{
+            spacing: units.smallSpacing
+            enabled: showFavorites.checked
+            Layout.leftMargin: units.largeSpacing
+            CheckBox{
+                id: startOnFavorites
+                text:  "Start on favorites page"
             }
         }
     }
