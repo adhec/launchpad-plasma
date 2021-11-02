@@ -103,7 +103,7 @@ Kicker.DashboardWindow {
     }
 
     mainItem: MouseArea {
-
+        id: rootMouseArea
         anchors.fill: parent
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         LayoutMirroring.enabled: Qt.application.layoutDirection == Qt.RightToLeft
@@ -362,35 +362,9 @@ Kicker.DashboardWindow {
                             anchors.fill: parent
                             z: 1
 
-                            property int wheelDelta: 0
-
-                            function scrollByWheel(wheelDelta, eventDelta) {
-                                // magic number 120 for common "one click"
-                                // See: http://qt-project.org/doc/qt-5/qml-qtquick-wheelevent.html#angleDelta-prop
-                                wheelDelta += eventDelta;
-
-                                var increment = 0;
-
-                                while (wheelDelta >= 120) {
-                                    wheelDelta -= 120;
-                                    increment++;
-                                }
-
-                                while (wheelDelta <= -120) {
-                                    wheelDelta += 120;
-                                    increment--;
-                                }
-
-                                while (increment != 0) {
-                                    pageList.activateNextPrev(increment < 0, false);
-                                    increment += (increment < 0) ? 1 : -1;
-                                }
-
-                                return wheelDelta;
-                            }
-
                             onWheelMoved: {
-                                wheelDelta = scrollByWheel(wheelDelta, delta.y);
+                                //event.accepted = false;
+                                rootMouseArea.wheelDelta = rootMouseArea.scrollByWheel(rootMouseArea.wheelDelta, delta.y);
                             }
                         }
                     }
@@ -445,37 +419,6 @@ Kicker.DashboardWindow {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: pageList.currentIndex = index;
-
-                    property int wheelDelta: 0
-
-                    function scrollByWheel(wheelDelta, eventDelta) {
-                        // magic number 120 for common "one click"
-                        // See: http://qt-project.org/doc/qt-5/qml-qtquick-wheelevent.html#angleDelta-prop
-                        wheelDelta += eventDelta;
-
-                        var increment = 0;
-
-                        while (wheelDelta >= 120) {
-                            wheelDelta -= 120;
-                            increment++;
-                        }
-
-                        while (wheelDelta <= -120) {
-                            wheelDelta += 120;
-                            increment--;
-                        }
-
-                        while (increment != 0) {
-                            pageList.activateNextPrev(increment < 0, false);
-                            increment += (increment < 0) ? 1 : -1;
-                        }
-
-                        return wheelDelta;
-                    }
-
-                    onWheel: {
-                        wheelDelta = scrollByWheel(wheelDelta, wheel.angleDelta.y);
-                    }
                 }
             }
         }
@@ -511,6 +454,36 @@ Kicker.DashboardWindow {
             }
         }
 
+        property int wheelDelta: 0
+
+        function scrollByWheel(wheelDelta, eventDelta) {
+            // magic number 120 for common "one click"
+            // See: http://qt-project.org/doc/qt-5/qml-qtquick-wheelevent.html#angleDelta-prop
+            wheelDelta += eventDelta;
+
+            var increment = 0;
+
+            while (wheelDelta >= 120) {
+                wheelDelta -= 120;
+                increment++;
+            }
+
+            while (wheelDelta <= -120) {
+                wheelDelta += 120;
+                increment--;
+            }
+
+            while (increment != 0) {
+                pageList.activateNextPrev(increment < 0, false);
+                increment += (increment < 0) ? 1 : -1;
+            }
+
+            return wheelDelta;
+        }
+
+        onWheel: {
+            wheelDelta = scrollByWheel(wheelDelta, wheel.angleDelta.y);
+        }
 
     }
 
