@@ -262,11 +262,10 @@ Kicker.DashboardWindow {
                             currentIndex = 1;
                         }
                     }
-                    onFlickingChanged: {
-                        if (!flicking) {
-                            var pos = mapToItem(contentItem, root.width / 2, root.height / 2);
-                            var itemIndex = indexAt(pos.x, pos.y);
-                            currentIndex = itemIndex;
+                    onMovingChanged: {
+                        if (!moving) {
+                            var pos = mapToItem(contentItem, width / 2, height / 2);
+                            currentIndex = indexAt(pos.x, pos.y);
                         }
                     }
 
