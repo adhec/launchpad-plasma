@@ -276,6 +276,8 @@ Kicker.DashboardWindow {
                     }
 
                     function activateNextPrev(next, activate = true) {
+                        var lastRow = pageList.currentItem.itemGrid.currentRow();
+                        
                         var oldIndex = pageList.currentIndex;
                         if (next) {
                             var newIndex = pageList.currentIndex + 1;
@@ -291,8 +293,11 @@ Kicker.DashboardWindow {
                             }
                         }
 
-                        if(oldIndex != pageList.currentIndex && activate) {
-                            pageList.currentItem.itemGrid.tryActivate(0, next ? 0 : gridNumCols - 1);
+                        // Give old values to next grid if we changed
+                        if(oldIndex != pageList.currentIndex) {
+                            if (activate) {
+                                pageList.currentItem.itemGrid.tryActivate(lastRow, next ? 0 : gridNumCols - 1);
+                            }
                         }
                     }
 
