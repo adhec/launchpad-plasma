@@ -121,6 +121,11 @@ FocusScope {
         onActionClicked: {
             var closeRequested = visualParent.actionTriggered(actionId, actionArgument);
             
+            // Force refresh on hidden to workaround kicker bug
+            if (actionId == "hideApplication") {
+                rootModel.refresh();
+            }
+
             if (closeRequested) {
                 root.toggle();
             }
