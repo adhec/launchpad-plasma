@@ -47,6 +47,7 @@ Item {
     property alias cfg_numberRows:    numberRows.value
     property alias cfg_spaceWidth:    spaceWidth.value
     property alias cfg_spaceHeight:   spaceHeight.value
+    property alias cfg_scrollAnimationDuration: scrollAnimationDuration.value
     property alias cfg_showFavorites: showFavorites.checked
     property alias cfg_startOnFavorites: startOnFavorites.checked
 
@@ -245,6 +246,21 @@ Item {
                 }
             }
         }
+
+        RowLayout{
+            Layout.fillWidth: true
+            SpinBox{
+                id: scrollAnimationDuration
+                minimumValue: 0
+                maximumValue: 2000
+                stepSize: 200
+            }
+            Label {
+                Layout.leftMargin: units.smallSpacing
+                text: i18n("Scroll animation duration (ms). Set to 0 for instant")
+            }
+        }
+
         CheckBox{
             id: showFavorites
             text:  "Show favorites"

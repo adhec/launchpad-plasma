@@ -97,7 +97,7 @@ Kicker.DashboardWindow {
         searchField.text = "";
         pageListScrollArea.focus = true;
         pageList.currentIndex = startIndex;
-        
+        pageList.positionViewAtIndex(pageList.currentIndex, ListView.Contain);
         //pageList.currentItem.itemGrid.currentIndex = -1;
         //pageList.currentItem.itemGrid.tryActivate(0, 0);
     }
@@ -109,6 +109,7 @@ Kicker.DashboardWindow {
         LayoutMirroring.enabled: Qt.application.layoutDirection == Qt.RightToLeft
         LayoutMirroring.childrenInherit: true
         focus: true
+        hoverEnabled: true
 
         onClicked: {
             root.toggle();
@@ -245,10 +246,12 @@ Kicker.DashboardWindow {
                     id: pageList
                     anchors.fill: parent
                     snapMode: ListView.SnapOneItem
+                    highlightMoveDuration : plasmoid.configuration.scrollAnimationDuration
+                    highlightMoveVelocity: -1
                     leftMargin: (showFavorites || searching) ? 0 : -widthScreen
                     orientation: Qt.Horizontal
                     onCurrentIndexChanged: {
-                        positionViewAtIndex(currentIndex, ListView.Contain);
+                        //positionViewAtIndex(currentIndex, ListView.Contain);
                     }
                     onCurrentItemChanged: {
                         if (!currentItem) {
@@ -261,12 +264,25 @@ Kicker.DashboardWindow {
                             currentIndex = 0;
                         else{
                             currentIndex = startIndex;
+                            positionViewAtIndex(currentIndex, ListView.Contain);
                         }
                     }
                     onMovingChanged: {
                         if (!moving) {
                             var pos = mapToItem(contentItem, width / 2, height / 2);
                             currentIndex = indexAt(pos.x, pos.y);
+                            //currentItem.itemGrid.hoverEnabled = true;
+                            //print("enabling for currentItem", currentItem.itemGrid.count);
+
+                            // Disable hover for any itemGrids that we enabled while moving
+                            //print("Looping for ", count);
+                            // for(let x = (widthScreen / 2); x < count * widthScreen; x += widthScreen) {
+                            //     var item = itemAt(x, heightScreen / 2);
+                            //     if (item != null && item != currentItem) {
+                            //         print("disabling for ", item.itemGrid.count);
+                            //         item.itemGrid.hoverEnabled = false;
+                            //     }
+                            // }
                         }
                     }
 
@@ -275,10 +291,16 @@ Kicker.DashboardWindow {
                         enabled = true;
                     }
 
+                    // Attempts to change index based on next. If next is true, increments,
+                    // otherwise decrements. Stops on list boundaries. If activate is true, 
+                    // also tries to activate what appears to be the next selected gridItem
                     function activateNextPrev(next, activate = true) {
+                        // Carry over row data for smooth transition.
                         var lastRow = pageList.currentItem.itemGrid.currentRow();
-                        
-                        var oldIndex = pageList.currentIndex;
+                        if (activate)
+                            pageList.currentItem.itemGrid.hoverEnabled = false;
+
+                        var oldItem = pageList.currentItem;
                         if (next) {
                             var newIndex = pageList.currentIndex + 1;
 
@@ -294,9 +316,13 @@ Kicker.DashboardWindow {
                         }
 
                         // Give old values to next grid if we changed
-                        if(oldIndex != pageList.currentIndex) {
+                        if(oldItem != pageList.currentItem) {
                             if (activate) {
+                                pageList.currentItem.itemGrid.hoverEnabled = false;
                                 pageList.currentItem.itemGrid.tryActivate(lastRow, next ? 0 : gridNumCols - 1);
+                            } else if (oldItem) {
+                                // TODO fix error where oldItem goes out of context?
+                                oldItem.itemGrid.temporarilyEnableHover();
                             }
                         }
                     }
@@ -312,6 +338,15 @@ Kicker.DashboardWindow {
 
                         ItemGridView {
                             id: gridView
+
+                            property bool isCurrent: (pageList.currentIndex == index)
+                            hoverEnabled: isCurrent
+
+                            // Rectangle {
+                            //     color: colorWithAlpha("red", 0.2)
+                            //     anchors.fill: parent
+                            //     visible: gridView.hoverEnabled
+                            // }
 
                             visible: model.count > 0
                             anchors.fill: parent
@@ -483,6 +518,34 @@ Kicker.DashboardWindow {
 
         onWheel: {
             wheelDelta = scrollByWheel(wheelDelta, wheel.angleDelta.y);
+        }
+
+        onPositionChanged: {
+            var pos = mapToItem(pageList.contentItem, mouse.x, mouse.y);
+            var hoveredPage = pageList.itemAt(pos.x, pos.y);
+            if (!hoveredPage)
+                return;
+            var hoveredGrid = hoveredPage.itemGrid;
+            
+            // Note: onPositionChanged will not be triggered if the mouse is
+            // currently over a gridView with hover enabled, so we know that
+            // any hoveredGrid under the mouse at this point has hover disabled
+
+            if (hoveredGrid != null) {
+                //print("changed to", mouse.x, mouse.y);
+                if (!pageList.moving) {
+                    // If not flicking, only want current itemGrid
+                    // (animation )
+                    if (pageList.currentItem.itemGrid == hoveredGrid) {
+                        hoveredGrid.hoverEnabled = true;
+                        //print("Set");
+                    }
+                } else {
+                    // If flicking, temporarily enable hover for all itemGrids
+                    // for smoothness until currentIndex set in onMovingChanged
+                    hoveredGrid.temporarilyEnableHover();
+                }
+            }
         }
 
     }
