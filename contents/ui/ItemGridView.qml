@@ -119,7 +119,11 @@ FocusScope {
         id: actionMenu
 
         onActionClicked: {
-            visualParent.actionTriggered(actionId, actionArgument);
+            var closeRequested = visualParent.actionTriggered(actionId, actionArgument);
+            
+            if (closeRequested) {
+                root.toggle();
+            }
         }
     }
 

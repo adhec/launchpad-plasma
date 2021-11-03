@@ -51,7 +51,7 @@ Item {
     }
 
     function actionTriggered(actionId, actionArgument) {
-        Tools.triggerAction(plasmoid, GridView.view.model, model.index, actionId, actionArgument);
+        return Tools.triggerAction(plasmoid, GridView.view.model, model.index, actionId, actionArgument);
     }
 
     Rectangle{
