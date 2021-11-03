@@ -39,6 +39,12 @@
     <entry name="startOnFavorites" type="Bool">
       <default>false</default>
     </entry>
+    <entry name="showSystemActions" type="Bool">
+      <default>false</default>
+    </entry>
+    <entry name="systemActionIconSize" type="Int">
+      <default>48</default>
+    </entry>
 
     <entry name="customButtonImage" type="Url">
       <default></default>
@@ -58,7 +64,7 @@
       <default></default>
     </entry>
     <entry name="favoriteSystemActions" type="StringList">
-      <default>logout,lock-screen,reboot,shutdown</default>
+      <default>logout,reboot,shutdown</default>
     </entry>
     <entry name="hiddenApplications" type="StringList">
       <default></default>

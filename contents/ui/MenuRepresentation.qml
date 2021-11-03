@@ -382,7 +382,11 @@ Kicker.DashboardWindow {
                             }
 
                             onKeyNavDown: {
-
+                                if(plasmoid.configuration.showSystemActions) {
+                                    currentIndex = -1;
+                                    systemFavoritesGrid.focus = true;
+                                    systemFavoritesGrid.tryActivate(0, 0);
+                                }
                             }
                             onKeyNavRight: {
                                 pageList.activateNextPrev(1);
@@ -407,6 +411,64 @@ Kicker.DashboardWindow {
             }
 
         }
+        
+        ItemGridView {
+            id: systemFavoritesGrid
+
+            anchors {
+                right: parent.right
+                bottom: parent.bottom
+                margins: units.largeSpacing
+                bottomMargin: units.smallSpacing
+            }
+
+            iconSize: plasmoid.configuration.systemActionIconSize
+            visible: plasmoid.configuration.showSystemActions
+            enabled: visible
+
+            cellWidth: iconSize + units.largeSpacing
+            cellHeight: cellWidth
+            height: cellHeight
+            width: cellWidth * count
+            
+            opacity: 0.9
+
+            horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff
+            verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff
+
+            dragEnabled: true
+            showLabels: false
+
+            model: systemFavorites
+            usesPlasmaTheme: true
+
+            onCurrentIndexChanged: {
+                focus = true;
+            }
+
+            onKeyNavLeft: {
+                currentIndex = -1;
+                pageList.currentItem.itemGrid.tryActivate(gridNumRows - 1, gridNumCols - 1);
+            }
+
+            onKeyNavUp: {
+                currentIndex = -1;
+                pageList.currentItem.itemGrid.tryActivate(gridNumRows - 1, gridNumCols - 1);
+            }
+
+            Keys.onPressed: {
+                if (event.key == Qt.Key_Tab) {
+                    event.accepted = true;
+                    currentIndex = -1;
+                    searchField.focus = true;
+                } else if (event.key == Qt.Key_Backtab) {
+                    event.accepted = true;
+                    currentIndex = -1;
+                    pageList.currentItem.itemGrid.tryActivate(0, 0);
+                }
+            }
+        }
+
         ListView {
             id: paginationBar
 

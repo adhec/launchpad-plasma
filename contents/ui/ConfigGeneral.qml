@@ -50,6 +50,8 @@ Item {
     property alias cfg_scrollAnimationDuration: scrollAnimationDuration.value
     property alias cfg_showFavorites: showFavorites.checked
     property alias cfg_startOnFavorites: startOnFavorites.checked
+    property alias cfg_showSystemActions: showSystemActions.checked
+    property alias cfg_systemActionIconSize: systemActionIconSize.value
 
     ColumnLayout {
         anchors.left: parent.left
@@ -275,6 +277,41 @@ Item {
             CheckBox{
                 id: startOnFavorites
                 text:  "Start on favorites page"
+            }
+        }
+        CheckBox{
+            id: showSystemActions
+            text:  "Show system actions"
+        }
+        RowLayout{
+            Layout.fillWidth: true
+            Layout.leftMargin: units.largeSpacing
+            enabled: showSystemActions.checked
+            Label {
+                Layout.leftMargin: units.smallSpacing
+                text: i18n("Size of system actions icons")
+            }
+            SpinBox{
+                id: systemActionIconSize
+                minimumValue: 24
+                maximumValue: 128
+                stepSize: 4
+            }
+        }
+        RowLayout{
+            Layout.fillWidth: true
+            Layout.leftMargin: units.largeSpacing
+            enabled: showSystemActions.checked
+            Button {
+                enabled: showSystemActions.checked
+                text: i18n("Unhide all system actions")
+                onClicked: {
+                    plasmoid.configuration.favoriteSystemActions = ["lock-screen", "switch-user", "suspend", "logout", "reboot", "shutdown"];
+                    popup.text = i18n("Unhidden!");
+                }
+            }
+            Label {
+                id: popup
             }
         }
     }

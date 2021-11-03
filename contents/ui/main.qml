@@ -93,7 +93,7 @@ Item {
         }
 
         onSystemFavoritesModelChanged: {
-           systemFavoritesModel.enabled = false;
+           systemFavoritesModel.enabled = true;
            systemFavoritesModel.favorites = plasmoid.configuration.favoriteSystemActions;
            systemFavoritesModel.maxFavorites = 8;
         }

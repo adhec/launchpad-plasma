@@ -112,7 +112,6 @@ FocusScope {
 
         onTriggered: {
             hoverEnabled = isCurrent;
-            print("Timer finished. To", gridView.count, isCurrent);
         }
     }
 
@@ -416,7 +415,7 @@ FocusScope {
                     pressX = -1;
                     pressY = -1;
                     pressedItem = null;
-                    hoverEnabled = false;
+                    //hoverEnabled = false;
                 }
             }
         }

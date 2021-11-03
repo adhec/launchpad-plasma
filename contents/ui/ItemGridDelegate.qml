@@ -68,7 +68,7 @@ Item {
         id: icon
         y: iconSize*0.2
         anchors.horizontalCenter: box.horizontalCenter
-        //anchors.verticalCenter:   box.verticalCenter
+        anchors.verticalCenter: !showLabel ? box.verticalCenter : undefined
         width: iconSize
         height: width
         animated: false
