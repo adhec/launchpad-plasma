@@ -108,7 +108,6 @@ Kicker.DashboardWindow {
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         LayoutMirroring.enabled: Qt.application.layoutDirection == Qt.RightToLeft
         LayoutMirroring.childrenInherit: true
-        focus: true
         hoverEnabled: true
 
         onClicked: {
@@ -159,43 +158,33 @@ Kicker.DashboardWindow {
             }
             placeholderText: "<font color='"+colorWithAlpha(theme.textColor,0.5) +"'>Plasma Search</font>"
             horizontalAlignment: TextInput.AlignHCenter
-            focus: true
             onTextChanged: {
                 runnerModel.query = text;
             }
 
             Keys.onPressed: {
-                if (event.key == Qt.Key_Down) {
+                if (event.key == Qt.Key_Down || (event.key == Qt.Key_Right && cursorPosition == length)) {
                     event.accepted = true;
                     pageList.currentItem.itemGrid.tryActivate(0, 0);
-                } else if (event.key == Qt.Key_Right) {
-                    if (cursorPosition == length) {
-                        event.accepted = true;
-
-                        if (pageList.currentItem.itemGrid.currentIndex == -1) {
-                            pageList.currentItem.itemGrid.tryActivate(0, 0);
-                        } else {
-                            pageList.currentItem.itemGrid.tryActivate(0, 1);
-                        }
-                    }
                 } else if (event.key == Qt.Key_Return || event.key == Qt.Key_Enter) {
                     if (text != "" && pageList.currentItem.itemGrid.count > 0) {
                         event.accepted = true;
-                        pageList.currentItem.itemGrid.tryActivate(0, 0);
-                        pageList.currentItem.itemGrid.model.trigger(0, "", null);
+                        if(pageList.currentItem.itemGrid.currentIndex == -1) {
+                            pageList.currentItem.itemGrid.tryActivate(0, 0);
+                        }
+                        pageList.currentItem.itemGrid.model.trigger(pageList.currentItem.itemGrid.currentIndex, "", null);
                         root.toggle();
                     }
                 } else if (event.key == Qt.Key_Tab) {
                     event.accepted = true;
+                    pageList.currentItem.itemGrid.tryActivate(0, 0);
                     //systemFavoritesGrid.tryActivate(0, 0);
                 } else if (event.key == Qt.Key_Backtab) {
                     event.accepted = true;
-
-                    if (!searching) {
-                        pageList.currentIndex = 1;
-                        filterList.forceActiveFocus();
+                    if (systemFavoritesGrid.visible) {
+                        systemFavoritesGrid.tryActivate(0, 0);
                     } else {
-                        //systemFavoritesGrid.tryActivate(0, 0);
+                        pageList.currentItem.itemGrid.tryActivate(0, 0);
                     }
                 }
             }
@@ -390,7 +379,7 @@ Kicker.DashboardWindow {
                             }
 
                             onKeyNavDown: {
-                                if(plasmoid.configuration.showSystemActions) {
+                                if(systemFavoritesGrid.visible) {
                                     currentIndex = -1;
                                     systemFavoritesGrid.focus = true;
                                     systemFavoritesGrid.tryActivate(0, 0);
@@ -431,7 +420,7 @@ Kicker.DashboardWindow {
             }
 
             iconSize: plasmoid.configuration.systemActionIconSize
-            visible: plasmoid.configuration.showSystemActions
+            visible: plasmoid.configuration.showSystemActions && count > 0
             enabled: visible
 
             cellWidth: iconSize + units.largeSpacing
@@ -548,11 +537,22 @@ Kicker.DashboardWindow {
             if (event.key == Qt.Key_Backspace) {
                 event.accepted = true;
                 searchField.backspace();
-            } else if (event.key == Qt.Key_Tab || event.key == Qt.Key_Backtab) {
-                if (pageListScrollArea.focus == true && pageList.currentItem.itemGrid.currentIndex == -1) {
-                    event.accepted = true;
+            } else if (event.key == Qt.Key_Tab) {
+                event.accepted = true;
+                if (pageList.currentItem.itemGrid.currentIndex == -1) {
                     pageList.currentItem.itemGrid.tryActivate(0, 0);
+                } else {
+                    //pageList.currentItem.itemGrid.keyNavDown();
+                    pageList.currentItem.itemGrid.currentIndex = -1;
+                    if (systemFavoritesGrid.visible) {
+                        systemFavoritesGrid.tryActivate(0, 0);
+                    } else {
+                        searchField.focus = true;
+                    }
                 }
+             } else if (event.key == Qt.Key_Backtab) {
+                event.accepted = true;
+                pageList.currentItem.itemGrid.keyNavUp();
             } else if (event.text != "") {
                 event.accepted = true;
                 searchField.appendText(event.text);
