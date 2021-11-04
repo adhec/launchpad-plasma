@@ -149,7 +149,15 @@ Kicker.DashboardWindow {
             anchors.topMargin: units.iconSizes.large
             anchors.horizontalCenter: parent.horizontalCenter
             width: parent.width * 0.2
-            placeholderText: "<font color='"+colorWithAlpha(theme.textColor,0.7) +"'>Plasma Search</font>"
+            style: TextFieldStyle {
+                textColor: theme.textColor
+                background: Rectangle {
+                    radius: height*0.5
+                    color: theme.textColor
+                    opacity: 0.2
+                }
+            }
+            placeholderText: "<font color='"+colorWithAlpha(theme.textColor,0.5) +"'>Plasma Search</font>"
             horizontalAlignment: TextInput.AlignHCenter
             focus: true
             onTextChanged: {
