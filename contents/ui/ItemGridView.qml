@@ -99,22 +99,6 @@ FocusScope {
         gridView.forceLayout();
     }
 
-    function temporarilyEnableHover() {
-        hoverEnabled = true;
-        resetHoverTimer.start();
-    }
-
-    Timer {
-        id: resetHoverTimer
-
-        interval: plasmoid.configuration.scrollAnimationDuration * 1.5
-        repeat: false
-
-        onTriggered: {
-            hoverEnabled = isCurrent;
-        }
-    }
-
     ActionMenu {
         id: actionMenu
 
