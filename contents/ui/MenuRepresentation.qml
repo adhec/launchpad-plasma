@@ -388,7 +388,7 @@ Kicker.DashboardWindow {
 
                             onWheelMoved: {
                                 //event.accepted = false;
-                                rootMouseArea.wheelDelta = rootMouseArea.scrollByWheel(rootMouseArea.wheelDelta, delta.y);
+                                rootMouseArea.wheelDelta = rootMouseArea.scrollByWheel(rootMouseArea.wheelDelta, delta);
                             }
                         }
                     }
@@ -552,7 +552,7 @@ Kicker.DashboardWindow {
         function scrollByWheel(wheelDelta, eventDelta) {
             // magic number 120 for common "one click"
             // See: http://qt-project.org/doc/qt-5/qml-qtquick-wheelevent.html#angleDelta-prop
-            wheelDelta += eventDelta;
+            wheelDelta += (Math.abs(eventDelta.x) > Math.abs(eventDelta.y)) ? eventDelta.x : eventDelta.y;
 
             var increment = 0;
 
@@ -575,7 +575,7 @@ Kicker.DashboardWindow {
         }
 
         onWheel: {
-            wheelDelta = scrollByWheel(wheelDelta, wheel.angleDelta.y);
+            wheelDelta = scrollByWheel(wheelDelta, wheel.angleDelta);
         }
 
         onPositionChanged: {
