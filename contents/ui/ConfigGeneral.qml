@@ -209,17 +209,30 @@ Item {
         }
 
         RowLayout{
+            Layout.fillWidth: true
+            SpinBox{
+                id: scrollAnimationDuration
+                minimumValue: 0
+                maximumValue: 2000
+                stepSize: 200
+            }
+            Label {
+                Layout.leftMargin: units.smallSpacing
+                text: i18n("Scroll animation duration (ms). Set to 0 for instant")
+            }
+        }
+
+        RowLayout{
             spacing: units.smallSpacing
             CheckBox{
                 id: useCustomSizeGrid
                 text:  "Enable custom grid"
             }
-
         }
         GroupBox {
-            title: i18n("Grid")
             flat: true
             enabled: useCustomSizeGrid.checked
+            Layout.leftMargin: units.largeSpacing
             ColumnLayout {
                 RowLayout{
                     Layout.fillWidth: true
@@ -246,20 +259,6 @@ Item {
                         text: i18n("Number of rows")
                     }
                 }
-            }
-        }
-
-        RowLayout{
-            Layout.fillWidth: true
-            SpinBox{
-                id: scrollAnimationDuration
-                minimumValue: 0
-                maximumValue: 2000
-                stepSize: 200
-            }
-            Label {
-                Layout.leftMargin: units.smallSpacing
-                text: i18n("Scroll animation duration (ms). Set to 0 for instant")
             }
         }
 

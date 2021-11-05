@@ -55,8 +55,8 @@ Kicker.DashboardWindow {
     backgroundColor: "transparent"
 
     property bool linkUseCustomSizeGrid: plasmoid.configuration.useCustomSizeGrid
-    property int gridNumCols:  plasmoid.configuration.useCustomSizeGrid ? plasmoid.configuration.numberColumns : Math.floor(width  * 0.85  / cellSizeWidth) // TODO: set from settings
-    property int gridNumRows:  plasmoid.configuration.useCustomSizeGrid ? plasmoid.configuration.numberRows : Math.floor(height * 0.8  /  cellSizeHeight)  // TODO: set from settings
+    property int gridNumCols:  plasmoid.configuration.useCustomSizeGrid ? plasmoid.configuration.numberColumns : Math.floor(width  * 0.85  / cellSizeWidth) 
+    property int gridNumRows:  plasmoid.configuration.useCustomSizeGrid ? plasmoid.configuration.numberRows : Math.floor(height * 0.8  /  cellSizeHeight)
     property int widthScreen:  gridNumCols * cellSizeWidth
     property int heightScreen: gridNumRows * cellSizeHeight
     property bool showFavorites: plasmoid.configuration.showFavorites
@@ -178,7 +178,6 @@ Kicker.DashboardWindow {
                 } else if (event.key == Qt.Key_Tab) {
                     event.accepted = true;
                     pageList.currentItem.itemGrid.tryActivate(0, 0);
-                    //systemFavoritesGrid.tryActivate(0, 0);
                 } else if (event.key == Qt.Key_Backtab) {
                     event.accepted = true;
                     if (systemFavoritesGrid.visible) {
@@ -337,12 +336,6 @@ Kicker.DashboardWindow {
                             property bool isCurrent: (pageList.currentIndex == index)
                             hoverEnabled: isCurrent
 
-                            // Rectangle {
-                            //     color: colorWithAlpha("red", 0.2)
-                            //     anchors.fill: parent
-                            //     visible: gridView.hoverEnabled
-                            // }
-
                             visible: model.count > 0
                             anchors.fill: parent
 
@@ -360,9 +353,6 @@ Kicker.DashboardWindow {
                                     pageListScrollArea.focus = true;
                                     focus = true;
                                 }
-                                //if(!visible && (currentIndex + 1) < pageList.count ){
-                                //    currentIndex = currentIndex + 1
-                                //}
                             }
 
                             onCountChanged: {
