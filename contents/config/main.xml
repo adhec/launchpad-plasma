@@ -25,13 +25,13 @@
       <default>64</default>
     </entry>
     <entry name="spaceWidth" type="Int">
-      <default>32</default>
+      <default>64</default>
     </entry>
     <entry name="spaceHeight" type="Int">
-      <default>12</default>
+      <default>32</default>
     </entry>
     <entry name="scrollAnimationDuration" type="Int">
-      <default>400</default>
+      <default>600</default>
     </entry>
     <entry name="showFavorites" type="Bool">
       <default>false</default>
