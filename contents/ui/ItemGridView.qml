@@ -226,7 +226,7 @@ FocusScope {
                         return;
                     }
 
-                    if (currentCol() != 0) {
+                    if (!(event.modifiers & Qt.ControlModifier) && currentCol() != 0) {
                         event.accepted = true;
                         moveCurrentIndexLeft();
                     } else {
@@ -242,7 +242,7 @@ FocusScope {
 
                     var columns = Math.floor(width / cellWidth);
 
-                    if (currentCol() != columns - 1 && currentIndex != count - 1) {
+                    if (!(event.modifiers & Qt.ControlModifier) && currentCol() != columns - 1 && currentIndex != count - 1) {
                         event.accepted = true;
                         moveCurrentIndexRight();
                     } else {
