@@ -356,8 +356,19 @@ Kicker.DashboardWindow {
                             }
 
                             onCountChanged: {
-                                if (searching && index == 0) {
-                                    currentIndex = 0;
+                                if (index == 0) {
+                                    if (searching) {
+                                        currentIndex = 0;
+                                    } else if (count == 0) {
+                                        root.showFavorites = false;
+                                        root.startIndex = 1;
+                                        if (pageList.currentIndex == 0) {
+                                            pageList.currentIndex = 1;
+                                        }
+                                    } else {
+                                        root.showFavorites = plasmoid.configuration.showFavorites;
+                                        root.startIndex = (showFavorites && plasmoid.configuration.startOnFavorites) ? 0 : 1
+                                    }
                                 }
                             }
 
