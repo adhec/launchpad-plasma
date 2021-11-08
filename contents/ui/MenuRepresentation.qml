@@ -98,8 +98,7 @@ Kicker.DashboardWindow {
         pageListScrollArea.focus = true;
         pageList.currentIndex = startIndex;
         pageList.positionViewAtIndex(pageList.currentIndex, ListView.Contain);
-        //pageList.currentItem.itemGrid.currentIndex = -1;
-        //pageList.currentItem.itemGrid.tryActivate(0, 0);
+        pageList.currentItem.itemGrid.currentIndex = -1;
     }
 
     mainItem: MouseArea {
@@ -156,7 +155,7 @@ Kicker.DashboardWindow {
                     opacity: 0.2
                 }
             }
-            placeholderText: "<font color='"+colorWithAlpha(theme.textColor,0.5) +"'>Plasma Search</font>"
+            placeholderText: i18n("<font color='"+colorWithAlpha(theme.textColor,0.5) +"'>Plasma Search</font>")
             horizontalAlignment: TextInput.AlignHCenter
             onTextChanged: {
                 runnerModel.query = text;

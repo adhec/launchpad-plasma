@@ -167,7 +167,6 @@ Kirigami.FormLayout {
 
         Layout.fillWidth: true
         Label {
-            Layout.leftMargin: units.smallSpacing
             text: i18n("Size of application icons:")
         }
         SpinBox{
@@ -180,7 +179,6 @@ Kirigami.FormLayout {
     RowLayout{
         Layout.fillWidth: true
         Label {
-            Layout.leftMargin: units.smallSpacing
             text: i18n("Space between columns:")
         }
         SpinBox{
@@ -193,7 +191,6 @@ Kirigami.FormLayout {
     RowLayout{
         Layout.fillWidth: true
         Label {
-            Layout.leftMargin: units.smallSpacing
             text: i18n("Space between rows:")
         }
         SpinBox{
@@ -231,13 +228,12 @@ Kirigami.FormLayout {
         spacing: units.smallSpacing
         CheckBox{
             id: useCustomSizeGrid
-            text:  "Enable custom grid"
+            text:  i18n("Enable custom grid")
         }
     }
     GroupBox {
         flat: true
         enabled: useCustomSizeGrid.checked
-        Layout.leftMargin: units.largeSpacing
         ColumnLayout {
             RowLayout{
                 Layout.fillWidth: true
@@ -276,7 +272,7 @@ Kirigami.FormLayout {
         Kirigami.FormData.label: i18n("Favorite Applications:")
 
         id: showFavorites
-        text:  "Show favorites"
+        text:  i18n("Show favorites")
         onClicked: {
             startOnFavorites.checked = checked;
         }
@@ -284,10 +280,9 @@ Kirigami.FormLayout {
     RowLayout{
         spacing: units.smallSpacing
         enabled: showFavorites.checked
-        Layout.leftMargin: units.largeSpacing
         CheckBox{
             id: startOnFavorites
-            text:  "Start on favorites page"
+            text:  i18n("Start on favorites page")
         }
     }
 
@@ -300,14 +295,12 @@ Kirigami.FormLayout {
         Kirigami.FormData.label: i18n("System Actions:")
 
         id: showSystemActions
-        text:  "Show system actions"
+        text:  i18n("Show system actions")
     }
     RowLayout{
         Layout.fillWidth: true
-        Layout.leftMargin: units.largeSpacing
         enabled: showSystemActions.checked
         Label {
-            Layout.leftMargin: units.smallSpacing
             text: i18n("Size of system actions icons:")
         }
         SpinBox{
@@ -319,7 +312,6 @@ Kirigami.FormLayout {
     }
     RowLayout{
         Layout.fillWidth: true
-        Layout.leftMargin: units.largeSpacing
         enabled: showSystemActions.checked
         Button {
             enabled: showSystemActions.checked
@@ -344,7 +336,6 @@ Kirigami.FormLayout {
 
         Layout.fillWidth: true
         Label {
-            Layout.leftMargin: units.smallSpacing
             text: i18n("Scroll animation duration (ms):")
         }
         SpinBox{
