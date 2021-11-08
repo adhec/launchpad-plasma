@@ -116,7 +116,7 @@ Kicker.DashboardWindow {
 
         Rectangle{
             anchors.fill: parent
-            color: colorWithAlpha(theme.backgroundColor,0.6)
+            color: colorWithAlpha(theme.backgroundColor, plasmoid.configuration.backgroundOpacity / 100)
         }
 
         PlasmaExtras.Heading {

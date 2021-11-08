@@ -25,6 +25,9 @@
     <entry name="spaceHeight" type="Int">
       <default>32</default>
     </entry>
+    <entry name="backgroundOpacity" type="Int">
+      <default>60</default>
+    </entry>
     <entry name="useCustomSizeGrid" type="Bool">
       <default>false</default>
     </entry>

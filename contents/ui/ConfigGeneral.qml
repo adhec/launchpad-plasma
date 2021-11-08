@@ -41,6 +41,7 @@ Kirigami.FormLayout {
     property alias cfg_iconSize:                iconSize.value
     property alias cfg_spaceWidth:              spaceWidth.value
     property alias cfg_spaceHeight:             spaceHeight.value
+    property alias cfg_backgroundOpacity:       backgroundOpacity.value
     property alias cfg_useCustomSizeGrid:       useCustomSizeGrid.checked
     property alias cfg_numberColumns:           numberColumns.value
     property alias cfg_numberRows:              numberRows.value
@@ -200,6 +201,22 @@ Kirigami.FormLayout {
             minimumValue: 10
             maximumValue: 128
             stepSize: 4
+        }
+    }
+    RowLayout{
+        Layout.fillWidth: true
+        Label {
+            text: i18n("Background opacity:")
+        }
+        Slider{
+            id: backgroundOpacity
+            minimumValue: 0
+            maximumValue: 100
+            stepSize: 10
+            implicitWidth: 100
+        }
+        Label {
+            text: i18n(backgroundOpacity.value + "%");
         }
     }
 
