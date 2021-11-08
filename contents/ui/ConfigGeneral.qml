@@ -337,4 +337,17 @@ Kirigami.FormLayout {
             stepSize: 200
         }
     }
+    RowLayout{
+        //Layout.fillWidth: true
+        Button {
+            text: i18n("Unhide all hidden applications")
+            onClicked: {
+                plasmoid.configuration.hiddenApplications = [""];
+                unhideAllAppsPopup.text = i18n("Unhidden!");
+            }
+        }
+        Label {
+            id: unhideAllAppsPopup
+        }
+    }
 }

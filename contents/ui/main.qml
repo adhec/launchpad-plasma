@@ -139,6 +139,11 @@ Item {
         onFavoriteSystemActionsChanged: {
             systemFavorites.favorites = plasmoid.configuration.favoriteSystemActions;
         }
+
+        onHiddenApplicationsChanged: {
+            // Force refresh on hidden
+            rootModel.refresh();
+        }
     }
 
     Kicker.RunnerModel {
