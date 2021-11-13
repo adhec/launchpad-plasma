@@ -12,6 +12,22 @@
     <entry name="useCustomButtonImage" type="Bool">
       <default>false</default>
     </entry>
+    <entry name="customButtonImage" type="Url">
+      <default></default>
+    </entry>
+
+    <entry name="iconSize" type="Int">
+      <default>64</default>
+    </entry>
+    <entry name="spaceWidth" type="Int">
+      <default>64</default>
+    </entry>
+    <entry name="spaceHeight" type="Int">
+      <default>32</default>
+    </entry>
+    <entry name="backgroundOpacity" type="Int">
+      <default>60</default>
+    </entry>
     <entry name="useCustomSizeGrid" type="Bool">
       <default>false</default>
     </entry>
@@ -21,35 +37,30 @@
     <entry name="numberRows" type="Int">
       <default>5</default>
     </entry>
-    <entry name="iconSize" type="Int">
-      <default>64</default>
+    <entry name="showFavorites" type="Bool">
+      <default>false</default>
     </entry>
-    <entry name="spaceWidth" type="Int">
-      <default>32</default>
+    <entry name="startOnFavorites" type="Bool">
+      <default>false</default>
     </entry>
-    <entry name="spaceHeight" type="Int">
-      <default>12</default>
+    <entry name="showSystemActions" type="Bool">
+      <default>false</default>
     </entry>
-
-    <entry name="customButtonImage" type="Url">
-      <default></default>
+    <entry name="systemActionIconSize" type="Int">
+      <default>48</default>
     </entry>
-
-    <entry name="showFilterList" type="Bool">
-      <default>true</default>
+    <entry name="scrollAnimationDuration" type="Int">
+      <default>600</default>
     </entry>
 
     <entry name="appNameFormat" type="Int">
       <default>0</default>
     </entry>
-    <entry name="limitDepth" type="Bool">
-      <default>false</default>
-    </entry>
     <entry name="favoriteApps" type="StringList">
       <default></default>
     </entry>
     <entry name="favoriteSystemActions" type="StringList">
-      <default>logout,lock-screen,reboot,shutdown</default>
+      <default>logout,reboot,shutdown</default>
     </entry>
     <entry name="hiddenApplications" type="StringList">
       <default></default>
@@ -60,18 +71,6 @@
     <entry name="extraRunners" type="StringList">
       <default>bookmarks,baloosearch</default>
     </entry>
-    <entry name="alignResultsToBottom" type="Bool">
-      <default>true</default>
-    </entry>
-    <entry name="switchCategoriesOnHover" type="Bool">
-      <label>Whether to switch between menu categories by hovering them.</label>
-      <default>false</default>
-    </entry>
-
-    <entry name="removeApplicationCommand" type="String">
-      <default>muon-discover --application</default>
-    </entry>
-
     <entry name="favoritesPortedToKAstats" type="Bool">
       <label>Are the favorites ported to use KActivitiesStats to allow per-activity favorites</label>
       <default>false</default>

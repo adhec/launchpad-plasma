@@ -51,7 +51,7 @@ Item {
     }
 
     function actionTriggered(actionId, actionArgument) {
-        Tools.triggerAction(plasmoid, GridView.view.model, model.index, actionId, actionArgument);
+        return Tools.triggerAction(plasmoid, GridView.view.model, model.index, actionId, actionArgument);
     }
 
     Rectangle{
@@ -68,7 +68,7 @@ Item {
         id: icon
         y: iconSize*0.2
         anchors.horizontalCenter: box.horizontalCenter
-        //anchors.verticalCenter:   box.verticalCenter
+        anchors.verticalCenter: !showLabel ? box.verticalCenter : undefined
         width: iconSize
         height: width
         animated: false

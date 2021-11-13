@@ -93,7 +93,7 @@ Item {
         }
 
         onSystemFavoritesModelChanged: {
-           systemFavoritesModel.enabled = false;
+           systemFavoritesModel.enabled = true;
            systemFavoritesModel.favorites = plasmoid.configuration.favoriteSystemActions;
            systemFavoritesModel.maxFavorites = 8;
         }
@@ -138,6 +138,11 @@ Item {
 
         onFavoriteSystemActionsChanged: {
             systemFavorites.favorites = plasmoid.configuration.favoriteSystemActions;
+        }
+
+        onHiddenApplicationsChanged: {
+            // Force refresh on hidden
+            rootModel.refresh();
         }
     }
 
