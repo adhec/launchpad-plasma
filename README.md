@@ -6,7 +6,7 @@ Download from: [https://store.kde.org/p/1364064/](https://store.kde.org/p/136406
 
 ### Previews: 
 
-![Image of ditto](https://github.com/adhec/launchpad-plasma/blob/main/preview.jpg)
+![Image of ditto](https://github.com/adhec/launchpad-plasma/blob/master/preview.jpg)
 
 ### Coffee
 
