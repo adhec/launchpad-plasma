@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 import QtQuick 2.0
+import QtQuick.Controls 2.0
 
 import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
@@ -56,12 +57,10 @@ Item {
 
     Rectangle{
         id: box
-        height: parent.height // - 10
-        width:  parent.width  // - 10
+        height: parent.height
+        width:  parent.width
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
-        //color:"red"
-        //opacity: 0.4
         color:"transparent"
     }
     PlasmaCore.IconItem {
@@ -76,11 +75,24 @@ Item {
         source: model.decoration
     }
 
+    Rectangle {
+        color: colorWithAlpha(theme.backgroundColor, 0.2)
+        width: label.implicitWidth + units.smallSpacing*2 > cellSizeWidth ? cellSizeWidth : label.implicitWidth + units.smallSpacing*2 // + units.smallSpacing*2 > iconSize ? label.implicitWidth + units.smallSpacing*2 : iconSize
+        height: label.height
+        anchors.centerIn: label
+        visible: showLabel
+        radius: 6
+    }
+
+    ToolTip {
+        parent: icon
+        visible: item.GridView.isCurrentItem && model.description
+        text: model.description
+    }
+
     PlasmaComponents.Label {
         id: label
-
         visible: showLabel
-
         anchors {
             top: icon.bottom
             topMargin: units.smallSpacing
@@ -94,9 +106,9 @@ Item {
 
         elide: Text.ElideRight
         wrapMode: Text.NoWrap
-
         text: model.display
     }
+
 
     Keys.onPressed: {
         if (event.key == Qt.Key_Menu && hasActionList) {

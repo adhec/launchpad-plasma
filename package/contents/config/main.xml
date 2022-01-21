@@ -19,14 +19,17 @@
     <entry name="iconSize" type="Int">
       <default>64</default>
     </entry>
+    <entry name="iconSizeFavorites" type="Int">
+      <default>56</default>
+    </entry>
     <entry name="spaceWidth" type="Int">
-      <default>64</default>
+      <default>76</default>
     </entry>
     <entry name="spaceHeight" type="Int">
       <default>32</default>
     </entry>
     <entry name="backgroundOpacity" type="Int">
-      <default>60</default>
+      <default>30</default>
     </entry>
     <entry name="useCustomSizeGrid" type="Bool">
       <default>false</default>
@@ -38,13 +41,15 @@
       <default>5</default>
     </entry>
     <entry name="showFavorites" type="Bool">
-      <default>false</default>
+      <default>true</default>
     </entry>
-    <entry name="startOnFavorites" type="Bool">
+
+    <!--<entry name="startOnFavorites" type="Bool">
       <default>false</default>
-    </entry>
+    </entry>-->
+
     <entry name="showSystemActions" type="Bool">
-      <default>false</default>
+      <default>true</default>
     </entry>
     <entry name="systemActionIconSize" type="Int">
       <default>48</default>

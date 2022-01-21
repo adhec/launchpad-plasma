@@ -32,7 +32,8 @@ FocusScope {
     signal keyNavUp
     signal keyNavDown
 
-    property bool dragEnabled: false
+    property bool dragEnabled: true
+    property bool dropEnabled: false
     property bool showLabels: true
     property alias usesPlasmaTheme: gridView.usesPlasmaTheme
 

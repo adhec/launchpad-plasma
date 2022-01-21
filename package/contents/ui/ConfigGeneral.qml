@@ -39,6 +39,7 @@ Kirigami.FormLayout {
     property bool cfg_useCustomButtonImage:     plasmoid.configuration.useCustomButtonImage
     property string cfg_customButtonImage:      plasmoid.configuration.customButtonImage
     property alias cfg_iconSize:                iconSize.value
+    property alias cfg_iconSizeFavorites:       iconSizeFavorites.value
     property alias cfg_spaceWidth:              spaceWidth.value
     property alias cfg_spaceHeight:             spaceHeight.value
     property alias cfg_backgroundOpacity:       backgroundOpacity.value
@@ -46,7 +47,7 @@ Kirigami.FormLayout {
     property alias cfg_numberColumns:           numberColumns.value
     property alias cfg_numberRows:              numberRows.value
     property alias cfg_showFavorites:           showFavorites.checked
-    property alias cfg_startOnFavorites:        startOnFavorites.checked
+    //property alias cfg_startOnFavorites:        startOnFavorites.checked
     property alias cfg_showSystemActions:       showSystemActions.checked
     property alias cfg_systemActionIconSize:    systemActionIconSize.value
     property alias cfg_scrollAnimationDuration: scrollAnimationDuration.value
@@ -124,7 +125,7 @@ Kirigami.FormLayout {
                 id: previewFrame
                 anchors.centerIn: parent
                 imagePath: plasmoid.location === PlasmaCore.Types.Vertical || plasmoid.location === PlasmaCore.Types.Horizontal
-                            ? "widgets/panel-background" : "widgets/background"
+                           ? "widgets/panel-background" : "widgets/background"
                 width: units.iconSizes.large + fixedMargins.left + fixedMargins.right
                 height: units.iconSizes.large + fixedMargins.top + fixedMargins.bottom
 
@@ -171,6 +172,18 @@ Kirigami.FormLayout {
         }
         SpinBox{
             id: iconSize
+            minimumValue: 24
+            maximumValue: 256
+            stepSize: 4
+        }
+    }
+    RowLayout{
+        Layout.fillWidth: true
+        Label {
+            text: i18n("Size of favorites icons:")
+        }
+        SpinBox{
+            id: iconSizeFavorites
             minimumValue: 24
             maximumValue: 256
             stepSize: 4
@@ -273,20 +286,18 @@ Kirigami.FormLayout {
 
         id: showFavorites
         text:  i18n("Show favorites")
-        onClicked: {
-            startOnFavorites.checked = checked;
-        }
+        //onClicked: {
+        //    startOnFavorites.checked = checked;
+        //}
     }
-    RowLayout{
-        spacing: units.smallSpacing
-        enabled: showFavorites.checked
-        CheckBox{
-            id: startOnFavorites
-            text:  i18n("Start on favorites page")
-        }
-    }
-
-    
+    //RowLayout{
+    //    spacing: units.smallSpacing
+    //    enabled: showFavorites.checked
+    //    CheckBox{
+    //        id: startOnFavorites
+    //        text:  i18n("Start on favorites page")
+    //    }
+    //}
     // ----------------- System Actions -----------------
     Item {
         Kirigami.FormData.isSection: true
@@ -300,6 +311,7 @@ Kirigami.FormLayout {
     RowLayout{
         Layout.fillWidth: true
         enabled: showSystemActions.checked
+        visible: false
         Label {
             text: i18n("Size of system actions icons:")
         }
@@ -311,6 +323,7 @@ Kirigami.FormLayout {
         }
     }
     RowLayout{
+        visible: false
         Layout.fillWidth: true
         enabled: showSystemActions.checked
         Button {
