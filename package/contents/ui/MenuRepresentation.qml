@@ -118,24 +118,28 @@ Kicker.DashboardWindow {
             source: "br.png"
             anchors.right: parent.right
             anchors.bottom: parent.bottom
+            visible: plasmoid.configuration.showRoundedCorners
             z:2
         }
         Image {
             source: "bl.png"
             anchors.left: parent.left
             anchors.bottom: parent.bottom
+            visible: plasmoid.configuration.showRoundedCorners
             z:2
         }
         Image {
             source: "tr.png"
             anchors.right: parent.right
             anchors.top: parent.top
+            visible: plasmoid.configuration.showRoundedCorners
             z:2
         }
         Image {
             source: "tl.png"
             anchors.left: parent.left
             anchors.top: parent.top
+            visible: plasmoid.configuration.showRoundedCorners
             z:2
         }
 

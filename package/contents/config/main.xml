@@ -37,6 +37,9 @@
     <entry name="showBackLabels" type="Bool">
       <default>true</default>
     </entry>
+    <entry name="showRoundedCorners" type="Bool">
+      <default>true</default>
+    </entry>
     <entry name="numberColumns" type="Int">
       <default>7</default>
     </entry>

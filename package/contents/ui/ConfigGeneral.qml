@@ -51,7 +51,9 @@ Kirigami.FormLayout {
     property alias cfg_showSystemActions:       showSystemActions.checked
     property alias cfg_systemActionIconSize:    systemActionIconSize.value
     property alias cfg_scrollAnimationDuration: scrollAnimationDuration.value
-    property alias cfg_showBackLabels:           showBackLabels.checked
+    property alias cfg_showBackLabels:          showBackLabels.checked
+    property alias cfg_showRoundedCorners:      showRoundedCorners.checked
+
 
     
     // ----------------- Icon -----------------
@@ -222,11 +224,22 @@ Kirigami.FormLayout {
     RowLayout{
         Layout.fillWidth: true
         Label {
-            text: i18n("Show background labels:")
+            text: i18n("Background labels:")
             Layout.minimumWidth: 200
         }
         CheckBox{
             id: showBackLabels
+        }
+    }
+
+    RowLayout{
+        Layout.fillWidth: true
+        Label {
+            text: i18n("Rounded corners:")
+            Layout.minimumWidth: 200
+        }
+        CheckBox{
+            id: showRoundedCorners
         }
     }
 
