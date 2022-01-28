@@ -80,8 +80,8 @@ Item {
         width: label.implicitWidth + units.smallSpacing*2 > cellSizeWidth ? cellSizeWidth : label.implicitWidth + units.smallSpacing*2 // + units.smallSpacing*2 > iconSize ? label.implicitWidth + units.smallSpacing*2 : iconSize
         height: label.height
         anchors.centerIn: label
-        visible: showLabel
-        radius: 6
+        visible: showLabel && plasmoid.configuration.showBackLabels
+        radius: 6        
     }
 
     ToolTip {

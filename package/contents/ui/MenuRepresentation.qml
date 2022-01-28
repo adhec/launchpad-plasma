@@ -109,8 +109,7 @@ Kicker.DashboardWindow {
 
 
 
-    mainItem:
-        Rectangle{
+    mainItem: Rectangle{
 
         anchors.fill: parent
         color: 'transparent'
@@ -140,6 +139,13 @@ Kicker.DashboardWindow {
             z:2
         }
 
+        ScaleAnimator{
+            id: animationSearch
+            from: 1.1
+            to: 1
+            target: mainPage
+        }
+
         MouseArea {
 
             id: rootMouseArea
@@ -148,23 +154,6 @@ Kicker.DashboardWindow {
             LayoutMirroring.enabled: Qt.application.layoutDirection == Qt.RightToLeft
             LayoutMirroring.childrenInherit: true
             hoverEnabled: true
-
-            ParallelAnimation{
-                id: animationSearch
-                ScaleAnimator{
-                    from: 1.1
-                    to: 1
-                    target: rootMouseArea
-                    duration: units.longDuration * 3
-                }
-                OpacityAnimator{
-                    from: 0
-                    to: 1
-                    target: rootMouseArea
-                    duration: units.longDuration
-                }
-
-            }
 
             onClicked: {
                 root.toggle();
@@ -213,7 +202,7 @@ Kicker.DashboardWindow {
                 anchors.topMargin: units.iconSizes.large
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: units.gridUnit * 18
-                font.pointSize: units.gridUnit * 0.7
+                font.pointSize: Math.ceil(dummyHeading.font.pointSize) + 3
                 style: TextFieldStyle {
                     textColor: theme.textColor
                     background: Rectangle {
@@ -283,6 +272,9 @@ Kicker.DashboardWindow {
 
 
             Rectangle{
+
+                id: mainPage
+
                 width:   widthScreen
                 height:  heightScreen
                 color: "transparent"

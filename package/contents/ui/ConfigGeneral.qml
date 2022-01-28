@@ -51,6 +51,7 @@ Kirigami.FormLayout {
     property alias cfg_showSystemActions:       showSystemActions.checked
     property alias cfg_systemActionIconSize:    systemActionIconSize.value
     property alias cfg_scrollAnimationDuration: scrollAnimationDuration.value
+    property alias cfg_showBackLabels:           showBackLabels.checked
 
     
     // ----------------- Icon -----------------
@@ -169,6 +170,7 @@ Kirigami.FormLayout {
         Layout.fillWidth: true
         Label {
             text: i18n("Size of application icons:")
+            Layout.minimumWidth: 200
         }
         SpinBox{
             id: iconSize
@@ -181,6 +183,7 @@ Kirigami.FormLayout {
         Layout.fillWidth: true
         Label {
             text: i18n("Size of favorites icons:")
+            Layout.minimumWidth: 200
         }
         SpinBox{
             id: iconSizeFavorites
@@ -193,6 +196,7 @@ Kirigami.FormLayout {
         Layout.fillWidth: true
         Label {
             text: i18n("Space between columns:")
+            Layout.minimumWidth: 200
         }
         SpinBox{
             id: spaceWidth
@@ -205,6 +209,7 @@ Kirigami.FormLayout {
         Layout.fillWidth: true
         Label {
             text: i18n("Space between rows:")
+            Layout.minimumWidth: 200
         }
         SpinBox{
             id: spaceHeight
@@ -213,10 +218,23 @@ Kirigami.FormLayout {
             stepSize: 4
         }
     }
+
+    RowLayout{
+        Layout.fillWidth: true
+        Label {
+            text: i18n("Show background labels:")
+            Layout.minimumWidth: 200
+        }
+        CheckBox{
+            id: showBackLabels
+        }
+    }
+
     RowLayout{
         Layout.fillWidth: true
         Label {
             text: i18n("Background opacity:")
+            Layout.minimumWidth: 200
         }
         Slider{
             id: backgroundOpacity
@@ -229,6 +247,7 @@ Kirigami.FormLayout {
             text: i18n(backgroundOpacity.value + "%");
         }
     }
+
 
     
     // ----------------- Custom Sized Grid -----------------
@@ -290,6 +309,7 @@ Kirigami.FormLayout {
         //    startOnFavorites.checked = checked;
         //}
     }
+
     //RowLayout{
     //    spacing: units.smallSpacing
     //    enabled: showFavorites.checked

@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Launchpad Plasma
-Comment=A configurable launcher menu
+Comment=A configurable grid launcher menu
 
 Type=Service
 Icon=start-here-kde
@@ -11,7 +11,7 @@ X-Plasma-MainScript=ui/main.qml
 X-Plasma-Provides=org.kde.plasma.launchermenu
 
 X-KDE-PluginInfo-Author=adhe
-X-KDE-PluginInfo-Email=adhemarks[at]gmail.com
+X-KDE-PluginInfo-Email=adhemarks@gmail.com
 X-KDE-PluginInfo-Name=launchpadPlasma
 X-KDE-PluginInfo-Version=1.0
 X-KDE-PluginInfo-Category=Application Launchers
