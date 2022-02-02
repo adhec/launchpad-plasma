@@ -1,0 +1,29 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "adhemarks@gmail.com",
+                "Name": "Adhe"
+            }
+        ],
+        "Category": "Application Launchers",
+        "Description": "A configurable grid launcher menu",
+        "Description[x-test]": "xxA configurable grid launcher menuxx",
+        "EnabledByDefault": true,
+        "Icon": "start-here-kde",
+        "Id": "launchpadPlasmaDark",
+        "License": "GPL-2.0+",
+        "Name": "Launchpad Plasma Dark",
+        "Name[x-test]": "xxLaunchpad Plasma Darkxx",
+        "ServiceTypes": [
+            "Plasma/Applet"
+        ],
+        "Version": "1.0",
+        "Website": ""
+    },
+    "X-Plasma-API": "declarativeappletscript",
+    "X-Plasma-MainScript": "ui/main.qml",
+    "X-Plasma-Provides": [
+        "org.kde.plasma.launchermenu"
+    ]
+}

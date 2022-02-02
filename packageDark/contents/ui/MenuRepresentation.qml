@@ -165,7 +165,7 @@ Kicker.DashboardWindow {
 
             Rectangle{
                 anchors.fill: parent
-                color: colorWithAlpha(theme.backgroundColor, plasmoid.configuration.backgroundOpacity / 100)
+                color: colorWithAlpha('#000000', plasmoid.configuration.backgroundOpacity / 100)
             }
 
             PlasmaExtras.Heading {
@@ -193,10 +193,8 @@ Kicker.DashboardWindow {
                 anchors.centerIn: searchField
                 width: searchField.width + 2
                 height: searchField.height + 2
-                color: colorWithAlpha(theme.textColor, 0.15)
+                color: '#11ffffff'
                 radius: 6
-                //border.color: "#aa909090"//theme.highlightColor #TODO settings
-                //border.width: 0
             }
 
             PlasmaComponents.TextField {
@@ -208,16 +206,17 @@ Kicker.DashboardWindow {
                 width: units.gridUnit * 18
                 font.pointSize: Math.ceil(dummyHeading.font.pointSize) + 3
                 style: TextFieldStyle {
-                    textColor: theme.textColor
+                    textColor: '#fcfcfc'
                     background: Rectangle {
                         opacity: 0
                     }
                 }
-                placeholderText: i18n("<font color='"+colorWithAlpha(theme.textColor,0.5) +"'>Search</font>")
+                placeholderText: i18n("<font color='#dcdcdc'>Search</font>")
                 horizontalAlignment: TextInput.AlignHCenter
                 onTextChanged: {
                     runnerModel.query = text;
                 }
+
 
                 Keys.onPressed: {
                     if (event.key == Qt.Key_Down || (event.key == Qt.Key_Right && cursorPosition == length)) {
@@ -259,21 +258,6 @@ Kicker.DashboardWindow {
                     text = text + newText;
                 }
             }
-
-            PlasmaCore.IconItem {
-                id: nepomunk
-                source: "nepomuk"
-                visible: true
-                width:  searchField.height - 2
-                height: width
-                anchors {
-                    left: searchField.left
-                    leftMargin: 10
-                    verticalCenter: searchField.verticalCenter
-                }
-
-            }
-
 
             Rectangle{
 
@@ -473,9 +457,9 @@ Kicker.DashboardWindow {
                 width: gridViewFavorites.width + units.smallSpacing*2
                 height: gridViewFavorites.height
                 anchors.centerIn: gridViewFavorites
-                color: colorWithAlpha(theme.backgroundColor, 0.3)
+                color: colorWithAlpha('#000000', 0.3)
                 radius: 8 // TODO: from settings
-                border.color: "#aa808080" // TODO: from settings
+                border.color: "#aa505050" // TODO: from settings
                 border.width: 1
                 visible: plasmoid.configuration.showFavorites
             }
@@ -625,7 +609,7 @@ Kicker.DashboardWindow {
                         property bool isCurrent: (pageList.currentIndex == index)
 
                         radius: width / 2
-                        color: theme.textColor
+                        color: '#dcdcdc'
                         visible: index != 0 // (showFavorites || searching) ? true : (index != 0)
                         opacity: 0.5
                         Behavior on width { SmoothedAnimation { duration: units.longDuration; velocity: 0.01 } }
