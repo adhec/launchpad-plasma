@@ -29,7 +29,7 @@
       <default>32</default>
     </entry>
     <entry name="backgroundOpacity" type="Int">
-      <default>60</default>
+      <default>50</default>
     </entry>
     <entry name="useCustomSizeGrid" type="Bool">
       <default>false</default>
@@ -54,6 +54,18 @@
       <default>false</default>
     </entry>-->
 
+<entry name="backgroundImageCheckBox" type="Bool">
+      <label>Image as background.</label>
+      <default>true</default>
+    </entry>
+    <entry name="backgroundImage" type="String">
+      <label>Image file path</label>
+      <default>background.jpg</default>
+    </entry>
+    <entry name="backgroundBlur" type="Int">
+      <default>0</default>
+    </entry>
+
     <entry name="showSystemActions" type="Bool">
       <default>true</default>
     </entry>
@@ -63,7 +75,6 @@
     <entry name="scrollAnimationDuration" type="Int">
       <default>600</default>
     </entry>
-
     <entry name="appNameFormat" type="Int">
       <default>0</default>
     </entry>

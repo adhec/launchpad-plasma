@@ -27,6 +27,7 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 import org.kde.plasma.private.kicker 0.1 as Kicker
+import QtGraphicalEffects 1.0
 
 import "../code/tools.js" as Tools
 import QtQuick.Window 2.0
@@ -39,6 +40,7 @@ Kicker.DashboardWindow {
     
     id: root
 
+    property bool smallScreen: ((Math.floor(width / PlasmaCore.Units.iconSizes.huge) <= 22) || (Math.floor(height / PlasmaCore.Units.iconSizes.huge) <= 14))
     property int iconSize:    plasmoid.configuration.iconSize
     property int iconSizeFavorites:    plasmoid.configuration.iconSizeFavorites
     property int spaceWidth:  plasmoid.configuration.spaceWidth
@@ -80,9 +82,13 @@ Kicker.DashboardWindow {
     }
 
     onVisibleChanged: {
-        animationSearch.start()
-        reset();
-        rootModel.pageSize = gridNumCols*gridNumRows
+        if (visible){
+            animationSearch.start()
+            reset();
+            rootModel.pageSize = gridNumCols*gridNumRows
+        }else{
+            imageBackground.opacity = 0
+        }
     }
 
     onSearchingChanged: {
@@ -115,6 +121,22 @@ Kicker.DashboardWindow {
         color: 'transparent'
 
         Image {
+            id: bkgImage
+            source: plasmoid.configuration.backgroundImage
+            anchors.fill: parent
+            visible: false
+            fillMode: Image.PreserveAspectCrop
+
+        }
+        FastBlur {
+            id: imageBackground
+            anchors.fill: bkgImage
+            source: bkgImage
+            radius: plasmoid.configuration.backgroundBlur
+            visible: plasmoid.configuration.backgroundImageCheckBox
+        }
+
+        Image {
             source: "br.png"
             anchors.right: parent.right
             anchors.bottom: parent.bottom
@@ -143,11 +165,18 @@ Kicker.DashboardWindow {
             z:2
         }
 
-        ScaleAnimator{
+        ParallelAnimation{
             id: animationSearch
-            from: 1.1
-            to: 1
-            target: mainPage
+            ScaleAnimator{
+                from: 1.1
+                to: 1
+                target: mainPage
+            }
+            OpacityAnimator{
+                target: imageBackground
+                from: 0
+                to: 1
+            }
         }
 
         MouseArea {
@@ -195,8 +224,8 @@ Kicker.DashboardWindow {
                 height: searchField.height + 2
                 color: colorWithAlpha(theme.textColor, 0.15)
                 radius: 6
-                //border.color: "#aa909090"//theme.highlightColor #TODO settings
-                //border.width: 0
+                border.color: colorWithAlpha(theme.textColor, 0.2) //#TODO settings
+                border.width: 1
             }
 
             PlasmaComponents.TextField {
@@ -205,8 +234,8 @@ Kicker.DashboardWindow {
                 anchors.top: parent.top
                 anchors.topMargin: units.iconSizes.large
                 anchors.horizontalCenter: parent.horizontalCenter
-                width: units.gridUnit * 18
-                font.pointSize: Math.ceil(dummyHeading.font.pointSize) + 3
+                implicitWidth: units.gridUnit * 14
+                font.pointSize: smallScreen ? dummyHeading.font.pointSize  : Math.ceil(dummyHeading.font.pointSize) + 3
                 style: TextFieldStyle {
                     textColor: theme.textColor
                     background: Rectangle {
