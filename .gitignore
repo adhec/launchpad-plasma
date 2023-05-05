@@ -7,6 +7,7 @@ check.sh
 
 build*
 
+test*
 
 # Prerequisites
 *.d

@@ -1,81 +1,49 @@
-/***************************************************************************
- *   Copyright (C) 2014 by Eike Hein <hein@kde.org>                        *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .        *
- ***************************************************************************/
+/*
+    SPDX-FileCopyrightText: 2014 Eike Hein <hein@kde.org>
 
-import QtQuick 2.0
-import QtQuick.Controls 1.0
-import QtQuick.Dialogs 1.2
-import QtQuick.Layouts 1.0
+    SPDX-License-Identifier: GPL-2.0-or-later
+*/
 
-import org.kde.plasma.core 2.0 as PlasmaCore
-import org.kde.plasma.components 2.0 as PlasmaComponents
+import QtQuick 2.15
+import QtQuick.Controls 2.15
 
-import org.kde.kquickcontrolsaddons 2.0 as KQuickAddons
 import org.kde.draganddrop 2.0 as DragDrop
-
+import org.kde.kirigami 2.5 as Kirigami
+import org.kde.kquickcontrolsaddons 2.0 as KQuickAddons
+import org.kde.plasma.core 2.0 as PlasmaCore
+import QtQuick.Layouts 1.0
 import org.kde.plasma.private.kicker 0.1 as Kicker
-import org.kde.kirigami 2.4 as Kirigami
-
-import org.kde.plasma.components 3.0 as PlasmaComponents3
 
 Kirigami.FormLayout {
-
     id: configGeneral
 
+    anchors.left: parent.left
+    anchors.right: parent.right
 
-    property string cfg_icon:                   plasmoid.configuration.icon
-    property bool cfg_useCustomButtonImage:     plasmoid.configuration.useCustomButtonImage
-    property string cfg_customButtonImage:      plasmoid.configuration.customButtonImage
-    property alias cfg_iconSize:                iconSize.value
-    property alias cfg_iconSizeFavorites:       iconSizeFavorites.value
-    property alias cfg_spaceWidth:              spaceWidth.value
-    property alias cfg_spaceHeight:             spaceHeight.value
+    property bool isDash: (plasmoid.pluginName === "org.kde.plasma.kickerdash")
+
+    property string cfg_icon: plasmoid.configuration.icon
+    property bool cfg_useCustomButtonImage: plasmoid.configuration.useCustomButtonImage
+    property string cfg_customButtonImage: plasmoid.configuration.customButtonImage
+
     property alias cfg_backgroundOpacity:       backgroundOpacity.value
-    property alias cfg_useCustomSizeGrid:       useCustomSizeGrid.checked
-    property alias cfg_numberColumns:           numberColumns.value
-    property alias cfg_numberRows:              numberRows.value
-    property alias cfg_showFavorites:           showFavorites.checked
-    //property alias cfg_startOnFavorites:        startOnFavorites.checked
-    property alias cfg_showSystemActions:       showSystemActions.checked
-    property alias cfg_systemActionIconSize:    systemActionIconSize.value
-    property alias cfg_scrollAnimationDuration: scrollAnimationDuration.value
-    property alias cfg_showBackLabels:          showBackLabels.checked
-    property alias cfg_showRoundedCorners:      showRoundedCorners.checked
-
-    property alias  cfg_backgroundImageCheckBox: backgroundImageCheckBox.checked
-    property string cfg_backgroundImage: backgroundImage.text
-    property alias cfg_backgroundBlur:           backgroundBlur.value
-
-    
-    // ----------------- Icon -----------------
-
+    property alias cfg_sizeApps: sizeApps.currentIndex
+    property alias cfg_sizeAppsFav: sizeAppsFav.currentIndex
 
     Button {
+        id: iconButton
 
         Kirigami.FormData.label: i18n("Icon:")
-        id: iconButton
-        //Layout.minimumWidth: previewFrame.width + units.smallSpacing * 2
-        //Layout.maximumWidth: Layout.minimumWidth
-        //Layout.minimumHeight: previewFrame.height + units.smallSpacing * 2
-        //Layout.maximumHeight: Layout.minimumWidth
 
-        implicitWidth: previewFrame.width + units.smallSpacing * 2
-        implicitHeight: previewFrame.height + units.smallSpacing * 2
+        implicitWidth: previewFrame.width + PlasmaCore.Units.smallSpacing * 2
+        implicitHeight: previewFrame.height + PlasmaCore.Units.smallSpacing * 2
+
+        // Just to provide some visual feedback when dragging;
+        // cannot have checked without checkable enabled
+        checkable: true
+        checked: dropArea.containsAcceptableDrag
+
+        onPressed: iconMenu.opened ? iconMenu.close() : iconMenu.open()
 
         DragDrop.DropArea {
             id: dropArea
@@ -113,22 +81,11 @@ Kirigami.FormLayout {
             id: iconDialog
 
             function setCustomButtonImage(image) {
-                cfg_customButtonImage = image || cfg_icon || "start-here-kde"
-                cfg_useCustomButtonImage = true;
+                configGeneral.cfg_customButtonImage = image || configGeneral.cfg_icon || "start-here-kde"
+                configGeneral.cfg_useCustomButtonImage = true;
             }
 
             onIconNameChanged: setCustomButtonImage(iconName);
-        }
-
-        // just to provide some visual feedback, cannot have checked without checkable enabled
-        checkable: true
-        checked: dropArea.containsAcceptableDrag
-        onClicked: {
-            checked = Qt.binding(function() { // never actually allow it being checked
-                return iconMenu.status === PlasmaComponents.DialogStatus.Open || dropArea.containsAcceptableDrag;
-            })
-
-            iconMenu.open(0, height)
         }
 
         PlasmaCore.FrameSvgItem {
@@ -136,282 +93,78 @@ Kirigami.FormLayout {
             anchors.centerIn: parent
             imagePath: plasmoid.location === PlasmaCore.Types.Vertical || plasmoid.location === PlasmaCore.Types.Horizontal
                        ? "widgets/panel-background" : "widgets/background"
-            width: units.iconSizes.large + fixedMargins.left + fixedMargins.right
-            height: units.iconSizes.large + fixedMargins.top + fixedMargins.bottom
+            width: PlasmaCore.Units.iconSizes.large + fixedMargins.left + fixedMargins.right
+            height: PlasmaCore.Units.iconSizes.large + fixedMargins.top + fixedMargins.bottom
 
             PlasmaCore.IconItem {
                 anchors.centerIn: parent
-                width: units.iconSizes.large
+                width: PlasmaCore.Units.iconSizes.large
                 height: width
-                source: cfg_useCustomButtonImage ? cfg_customButtonImage : cfg_icon
+                source: configGeneral.cfg_useCustomButtonImage ? configGeneral.cfg_customButtonImage : configGeneral.cfg_icon
+            }
+        }
+
+        Menu {
+            id: iconMenu
+
+            // Appear below the button
+            y: +parent.height
+
+            onClosed: iconButton.checked = false;
+
+            MenuItem {
+                text: i18nc("@item:inmenu Open icon chooser dialog", "Choose…")
+                icon.name: "document-open-folder"
+                onClicked: iconDialog.open()
+            }
+            MenuItem {
+                text: i18nc("@item:inmenu Reset icon to default", "Clear Icon")
+                icon.name: "edit-clear"
+                onClicked: {
+                    configGeneral.cfg_icon = "start-here-kde"
+                    configGeneral.cfg_useCustomButtonImage = false
+                }
             }
         }
     }
 
-    // QQC Menu can only be opened at cursor position, not a random one
-    PlasmaComponents.ContextMenu {
-        id: iconMenu
-        visualParent: iconButton
 
-        PlasmaComponents.MenuItem {
-            text: i18nc("@item:inmenu Open icon chooser dialog", "Choose...")
-            icon: "document-open-folder"
-            onClicked: iconDialog.open()
-        }
-        PlasmaComponents.MenuItem {
-            text: i18nc("@item:inmenu Reset icon to default", "Clear Icon")
-            icon: "edit-clear"
-            onClicked: {
-                cfg_useCustomButtonImage = false;
-            }
-        }
-    }
-
-
-
-    // ----------------- Appearance -----------------
-    SpinBox{
-        Kirigami.FormData.label: "Size of application icons:"
-        id: iconSize
-        minimumValue: 24
-        maximumValue: 256
-        stepSize: 4
-    }
-
-    SpinBox{
-        Kirigami.FormData.label: i18n("Size of favorites icons:")
-        id: iconSizeFavorites
-        minimumValue: 24
-        maximumValue: 256
-        stepSize: 4
-    }
-
-
-    SpinBox{
-        Kirigami.FormData.label: "Space between columns:"
-        id: spaceWidth
-        minimumValue: 10
-        maximumValue: 128
-        stepSize: 4
-    }
-
-    SpinBox{
-        Kirigami.FormData.label:  i18n("Space between rows:")
-        id: spaceHeight
-        minimumValue: 10
-        maximumValue: 128
-        stepSize: 4
-    }
-
-    // ----------------- Custom Sized Grid -----------------
-
-    RowLayout{
-        Kirigami.FormData.label: i18n("Custom Grid:")
-
-        spacing: units.smallSpacing
-        CheckBox{
-            id: useCustomSizeGrid
-            text:  i18n("Enable custom grid")
-        }
-    }
-
-    ColumnLayout {
-        enabled: useCustomSizeGrid.checked
-        RowLayout{
-            Layout.fillWidth: true
-
-            SpinBox{
-                id: numberColumns
-                minimumValue: 4
-                maximumValue: 20
-            }
-            Label {
-                Layout.leftMargin: units.smallSpacing
-                text: i18n("columns")
-            }
-        }
-
-        RowLayout{
-            Layout.fillWidth: true
-
-            SpinBox{
-                id: numberRows
-                minimumValue: 4
-                maximumValue: 20
-            }
-            Label {
-                Layout.leftMargin: units.smallSpacing
-                text: i18n("rows")
-            }
-        }
-    }
-
-    // ----------------- Background ---------------
-    CheckBox{
-        Kirigami.FormData.label:  i18n("Background appearance:")
-        text: i18n("Show background labels")
-        id: showBackLabels
-    }
-
-
-    CheckBox{
-        text: i18n("Rounded corners")
-        id: showRoundedCorners
-    }
-
-
-    RowLayout{
-        Layout.fillWidth: true
-
-        Slider{
-            id: backgroundOpacity
-            minimumValue: 0
-            maximumValue: 100
-            stepSize: 10
-            implicitWidth: 100
-        }
-        Label {
-            text: backgroundOpacity.value + "% "+ i18n("background dimmed")
-        }
-    }
-
-    RowLayout{
-        Layout.fillWidth: true
-        CheckBox {
-            id: backgroundImageCheckBox
-            text: i18n("Show image")
-        }
-        TextField {
-            id: backgroundImage
-            placeholderText: "Select image"
-            text: cfg_backgroundImage
-            readOnly : true
-            enabled: backgroundImageCheckBox.checked
-            implicitWidth: 150
-        }
-
-        PlasmaComponents3.ToolButton {
-            icon.name:  "folder"
-            onClicked: {fileDialog.open() }
-            flat: false
-            enabled: backgroundImageCheckBox.checked
-        }
-        FileDialog {
-            id: fileDialog
-            selectMultiple : false
-            title: "Pick a image file"
-            nameFilters: [ "Image files (*.jpg *.png *.jpeg)", "All files (*)" ]
-            onAccepted: {
-                backgroundImage.text= fileDialog.fileUrls[0]
-                cfg_backgroundImage = backgroundImage.text
-            }
-        }
-    }
-
-    RowLayout{
-        Layout.fillWidth: true
-
-        Slider{
-            id: backgroundBlur
-            minimumValue: 0
-            maximumValue: 100
-            stepSize: 8
-            implicitWidth: 100
-            enabled: backgroundImageCheckBox.checked
-        }
-        Label {
-            text:  backgroundBlur.value + ' ' + i18n("image blur intensity")
-            enabled: backgroundImageCheckBox.checked
-        }
-    }
-
-
-
-
-    // ----------------- Favorites -----------------
-
-    CheckBox{
-        Kirigami.FormData.label: i18n("Favorite Applications:")
-
-        id: showFavorites
-        text:  i18n("Show favorites")
-        //onClicked: {
-        //    startOnFavorites.checked = checked;
-        //}
-    }
-
-    //RowLayout{
-    //    spacing: units.smallSpacing
-    //    enabled: showFavorites.checked
-    //    CheckBox{
-    //        id: startOnFavorites
-    //        text:  i18n("Start on favorites page")
-    //    }
-    //}
-    // ----------------- System Actions -----------------
-
-    CheckBox{
-        Kirigami.FormData.label: i18n("System Actions:")
-
-        id: showSystemActions
-        text:  i18n("Show system actions")
-    }
-    RowLayout{
-        Layout.fillWidth: true
-        enabled: showSystemActions.checked
-        visible: false
-        Label {
-            text: i18n("Size of system actions icons:")
-        }
-        SpinBox{
-            id: systemActionIconSize
-            minimumValue: 24
-            maximumValue: 128
-            stepSize: 4
-        }
-    }
-    RowLayout{
-        visible: false
-        Layout.fillWidth: true
-        enabled: showSystemActions.checked
-        Button {
-            enabled: showSystemActions.checked
-            text: i18n("Unhide all system actions")
-            onClicked: {
-                plasmoid.configuration.favoriteSystemActions = ["lock-screen", "switch-user", "suspend", "logout", "reboot", "shutdown"];
-                unhideSystemActionsPopup.text = i18n("Unhidden!");
-            }
-        }
-        Label {
-            id: unhideSystemActionsPopup
-        }
-    }
-
-
-    // ----------------- Other -----------------
     Item {
         Kirigami.FormData.isSection: true
     }
-    RowLayout {
-        Kirigami.FormData.label: i18n("Other:")
 
+    RowLayout{
         Layout.fillWidth: true
-        Label {
-            text: i18n("Scroll animation duration (ms):")
+        Kirigami.FormData.label: i18n("Background opacity:")
+        Slider{
+            id: backgroundOpacity
+            from: 0
+            to: 100
+            stepSize: 5
+            implicitWidth: 100
         }
-        SpinBox{
-            id: scrollAnimationDuration
-            minimumValue: 0
-            maximumValue: 2000
-            stepSize: 200
+        Label {
+            text: backgroundOpacity.value + "% "
         }
     }
+
+    ComboBox {
+        id: sizeApps
+        Kirigami.FormData.label: i18n("Size icons:")
+        model: [i18n("SmallMedium"), i18n("Medium"), i18n("Large"), i18n("Huge"), i18n("X Huge"), i18n("Enormous") ]
+    }
+
+    ComboBox {
+        id: sizeAppsFav
+        Kirigami.FormData.label: i18n("Size icons favorites:")
+        model: [i18n("SmallMedium"), i18n("Medium"), i18n("Large"), i18n("Huge"), i18n("X Huge"), i18n("Enormous") ]
+    }
+
     RowLayout{
-        //Layout.fillWidth: true
         Button {
-            text: i18n("Unhide all hidden applications")
+            text: i18n("Unhide all applications")
             onClicked: {
-                plasmoid.configuration.hiddenApplications = [""];
+                plasmoid.configuration.hiddenApplications = [];
                 unhideAllAppsPopup.text = i18n("Unhidden!");
             }
         }
@@ -420,11 +173,5 @@ Kirigami.FormLayout {
         }
     }
 
-    // --------------------- Drag and drop ---------------
-    DropArea {
-        anchors.fill: parent
-        onDropped: {
-            cfg_backgroundImage = drop.text
-        }
-    }
+
 }

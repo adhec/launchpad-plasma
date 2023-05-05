@@ -1,101 +1,117 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
-      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
-  <kcfgfile name=""/>
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+<kcfgfile name=""/>
 
-  <group name="General">
-    <entry name="icon" type="String">
-      <default>start-here-kde</default>
-    </entry>
-    <entry name="useCustomButtonImage" type="Bool">
-      <default>false</default>
-    </entry>
-    <entry name="customButtonImage" type="Url">
-      <default></default>
-    </entry>
 
-    <entry name="iconSize" type="Int">
-      <default>64</default>
-    </entry>
-    <entry name="iconSizeFavorites" type="Int">
-      <default>56</default>
-    </entry>
-    <entry name="spaceWidth" type="Int">
-      <default>76</default>
-    </entry>
-    <entry name="spaceHeight" type="Int">
-      <default>32</default>
-    </entry>
-    <entry name="backgroundOpacity" type="Int">
-      <default>50</default>
-    </entry>
-    <entry name="useCustomSizeGrid" type="Bool">
-      <default>false</default>
-    </entry>    
-    <entry name="showBackLabels" type="Bool">
-      <default>false</default>
-    </entry>
-    <entry name="showRoundedCorners" type="Bool">
-      <default>false</default>
-    </entry>
-    <entry name="numberColumns" type="Int">
-      <default>7</default>
-    </entry>
-    <entry name="numberRows" type="Int">
-      <default>5</default>
-    </entry>
-    <entry name="showFavorites" type="Bool">
-      <default>true</default>
-    </entry>
+<group name="General">
+<entry name="icon" type="String">
+<default>start-here-kde</default>
+</entry>
+<entry name="useCustomButtonImage" type="Bool">
+<default>false</default>
+</entry>
+<entry name="customButtonImage" type="Url">
+<default></default>
+</entry>
 
-    <!--<entry name="startOnFavorites" type="Bool">
-      <default>false</default>
-    </entry>-->
+<entry name="iconSize" type="Int">
+<default>64</default>
+</entry>
+<entry name="iconSizeFavorites" type="Int">
+<default>56</default>
+</entry>
+<entry name="spaceWidth" type="Int">
+<default>76</default>
+</entry>
+<entry name="spaceHeight" type="Int">
+<default>32</default>
+</entry>
+<entry name="backgroundOpacity" type="Int">
+<default>50</default>
+</entry>
+<entry name="useCustomSizeGrid" type="Bool">
+<default>false</default>
+</entry>
+<entry name="showBackLabels" type="Bool">
+<default>true</default>
+</entry>
+<entry name="showRoundedCorners" type="Bool">
+<default>false</default>
+</entry>
+<entry name="numberColumns" type="Int">
+<default>7</default>
+</entry>
+<entry name="numberRows" type="Int">
+<default>5</default>
+</entry>
+<entry name="showFavorites" type="Bool">
+<default>true</default>
+</entry>
+
+<entry name="showFilters" type="Bool">
+<default>true</default>
+</entry>
+
+<entry name="backgroundOpacity" type="Int">
+<default>65</default>
+</entry>
 
 <entry name="backgroundImageCheckBox" type="Bool">
-      <label>Image as background.</label>
-      <default>true</default>
-    </entry>
-    <entry name="backgroundImage" type="String">
-      <label>Image file path</label>
-      <default>background.jpg</default>
-    </entry>
-    <entry name="backgroundBlur" type="Int">
-      <default>0</default>
-    </entry>
+<label>Image as background.</label>
+<default>false</default>
+</entry>
+<entry name="backgroundImage" type="String">
+<label>Image file path</label>
+<default>background.jpg</default>
+</entry>
+<entry name="backgroundBlur" type="Int">
+<default>64</default>
+</entry>
 
-    <entry name="showSystemActions" type="Bool">
-      <default>true</default>
-    </entry>
-    <entry name="systemActionIconSize" type="Int">
-      <default>48</default>
-    </entry>
-    <entry name="scrollAnimationDuration" type="Int">
-      <default>600</default>
-    </entry>
-    <entry name="appNameFormat" type="Int">
-      <default>0</default>
-    </entry>
-    <entry name="favoriteApps" type="StringList">
-      <default></default>
-    </entry>
-    <entry name="favoriteSystemActions" type="StringList">
-      <default>logout,reboot,shutdown</default>
-    </entry>
-    <entry name="hiddenApplications" type="StringList">
-      <default></default>
-    </entry>
-    <entry name="useExtraRunners" type="Bool">
-      <default>false</default>
-    </entry>
-    <entry name="extraRunners" type="StringList">
-      <default>bookmarks,baloosearch</default>
-    </entry>
-    <entry name="favoritesPortedToKAstats" type="Bool">
-      <label>Are the favorites ported to use KActivitiesStats to allow per-activity favorites</label>
-      <default>false</default>
-    </entry>
-  </group>
+<entry name="showSystemActions" type="Bool">
+<default>true</default>
+</entry>
+<entry name="systemActionIconSize" type="Int">
+<default>48</default>
+</entry>
+<entry name="scrollAnimationDuration" type="Int">
+<default>600</default>
+</entry>
+<entry name="appNameFormat" type="Int">
+<default>0</default>
+</entry>
+<entry name="favoriteApps" type="StringList">
+<default></default>
+</entry>
+<entry name="sizeApps" type="Int">
+<default>4</default>
+</entry>
+<entry name="sizeAppsFav" type="Int">
+<default>2</default>
+</entry>
+<entry name="favoriteSystemActions" type="StringList">
+<default>logout,reboot,shutdown</default>
+</entry>
+<entry name="hiddenApplications" type="StringList">
+<default></default>
+</entry>
+<entry name="useExtraRunners" type="Bool">
+<default>false</default>
+</entry>
+
+<entry name="defaultSize" type="String">
+<default>Medium</default>
+</entry>
+
+<entry name="extraRunners" type="StringList">
+<default>bookmarks,baloosearch</default>
+</entry>
+<entry name="favoritesPortedToKAstats" type="Bool">
+<label>Are the favorites ported to use KActivitiesStats to allow per-activity favorites</label>
+<default>false</default>
+</entry>
+</group>
 </kcfg>

@@ -5,6 +5,7 @@
       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
   <kcfgfile name=""/>
 
+
   <group name="General">
     <entry name="icon" type="String">
       <default>start-here-kde</default>
@@ -50,6 +51,13 @@
       <default>true</default>
     </entry>
 
+<entry name="showFilters" type="Bool">
+  <default>true</default>
+</entry>
+
+<entry name="backgroundOpacity" type="Int">
+  <default>60</default>
+</entry>
     <!--<entry name="startOnFavorites" type="Bool">
       <default>false</default>
     </entry>-->
@@ -81,6 +89,12 @@
     <entry name="favoriteApps" type="StringList">
       <default></default>
     </entry>
+    <entry name="sizeApps" type="Int">
+      <default>4</default>
+    </entry>
+    <entry name="sizeAppsFav" type="Int">
+      <default>2</default>
+    </entry>
     <entry name="favoriteSystemActions" type="StringList">
       <default>logout,reboot,shutdown</default>
     </entry>
@@ -90,6 +104,11 @@
     <entry name="useExtraRunners" type="Bool">
       <default>false</default>
     </entry>
+
+<entry name="defaultSize" type="String">
+<default>Medium</default>
+</entry>
+
     <entry name="extraRunners" type="StringList">
       <default>bookmarks,baloosearch</default>
     </entry>

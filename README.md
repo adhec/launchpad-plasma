@@ -1,23 +1,43 @@
-# Launchpad-plasma
 
-Menu launcher for plasma KDE
+# Launchpad plasma
 
-Download from: [https://store.kde.org/p/1364064/](https://store.kde.org/p/1364064/)
+A fullscreen menu (plasmoid) for kde plasma :blue_heart: 
 
-### Previews: 
+### Features
+- Show/hide filter list
+- Hide applications
+- Favorites apps 
 
-![Image of ditto](https://github.com/adhec/launchpad-plasma/blob/master/preview.jpg)
+## Installation
 
-### Coffee
+Download the menu from: [https://store.kde.org/p/1364064/](https://store.kde.org/p/1364064/)
 
-Thanks for all the support. If you like what I do,
-Share your ❤️ Buy me a ☕
 
-[<img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_100x26.png"  style="width:72px;">](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=V9Q8MK9CKSQW8&source=url)  or  [<img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg">](https://liberapay.com/_adhe_/donate)
+## Screenshots
 
-Have fun ;)
+![menu](https://raw.githubusercontent.com/adhec/launchpad-plasma/master/preview.jpg)
 
-## Translating
+## License
+
+This project is [GPL-2.0+](https://choosealicense.com/licenses/gpl-2.0/) license
+
+## Contributing
+
+Contributions are always welcome!
+
+## Support
+
+You can also help the project.
+
+<p>
+    <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=V9Q8MK9CKSQW8&source=url" target="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=V9Q8MK9CKSQW8&source=url">
+        <img src="https://img.shields.io/badge/PayPal-adhec-blue.svg?logo=paypal&logoColor=00457C&style=flat-square" alt="PayPal"/>
+    </a>
+    <a href="https://liberapay.com/_adhe_/donate" target="https://liberapay.com/_adhe_/donate">
+        <img src="https://img.shields.io/badge/Liberapay-adhec-yellow.svg?logo=liberapay&logoColor=f6c915&style=flat-square" alt="Liberapay"/>
+    </a>
+</p>
+
+## Translation
 
 [Todo]
-
